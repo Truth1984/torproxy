@@ -1,9 +1,9 @@
-FROM alpine
+FROM alpine:latest
 MAINTAINER David Personette <dperson@gmail.com>
 
 # Install tor and privoxy
 RUN apk --no-cache --no-progress upgrade && \
-    apk --no-cache --no-progress add bash curl privoxy shadow tini tor tzdata&&\
+    apk --no-cache --no-progress add bash curl privoxy shadow tini tor tzdata obfs4proxy nano&&\
     file='/etc/privoxy/config' && \
     sed -i 's|^\(accept-intercepted-requests\) .*|\1 1|' $file && \
     sed -i '/^listen/s|127\.0\.0\.1||' $file && \
@@ -48,6 +48,7 @@ RUN apk --no-cache --no-progress upgrade && \
     echo 'TransPort 0.0.0.0:9040' >>/etc/tor/torrc && \
     echo 'User tor' >>/etc/tor/torrc && \
     echo 'VirtualAddrNetworkIPv4 10.192.0.0/10' >>/etc/tor/torrc && \
+    echo 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy managed' >> /etc/tor/torrc \
     mkdir -p /etc/tor/run && \
     chown -Rh tor. /var/lib/tor /etc/tor/run && \
     chmod 0750 /etc/tor/run && \
