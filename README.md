@@ -26,6 +26,14 @@ and removing ads and other obnoxious Internet junk.
 see: [tor-route-all-traffic.sh](https://github.com/dperson/torproxy/blob/master/tor-route-all-traffic.sh).
 For it to work, you must set `--net=host` when launching the container.
 
+## What's new
+
+updated to latest version (Alpine:3.24.1)
+
+add obfs4 support
+
+use `truth1984/torproxy` to pull the image
+
 ## Exposing the port
 
     sudo docker run -it -p 8118:8118 -p 9050:9050 -d dperson/torproxy
